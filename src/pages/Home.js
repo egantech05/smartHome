@@ -2,6 +2,8 @@ import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BarChart } from 'react-native-gifted-charts';
 
+import Floorplan from "../../assets/Floorplan"
+
 const energyData = [
     { value: 12, label: "M",},
     { value: 16, label: "T",},
@@ -113,9 +115,15 @@ export default function Home(){
                 </View>
                 
             </ScrollView>
-            <View style={styles.bottomSection}>
-
-            </View>
+            <ScrollView style={styles.bottomSection} contentContainerStyle={styles.bottomSectionContent} showsVerticalScrollIndicator={false}   nestedScrollEnabled>
+                <ScrollView
+                horizontal
+                nestedScrollEnabled
+                showsHorizontalScrollIndicator={false} 
+                >
+                    <Floorplan/>
+                </ScrollView>
+            </ScrollView>
         </View>
     );
 };
@@ -123,11 +131,10 @@ export default function Home(){
 const styles= StyleSheet.create({
     container:{
         flex:1,
-        gap:8,
     },
 
     topSection:{
-        flex:1
+        maxHeight: 180,
     },
 
     topSectionContent:{
@@ -135,12 +142,17 @@ const styles= StyleSheet.create({
         flexWrap:"wrap",
         gap: 16,
         justifyContent: "space-between",
+
     },
 
     bottomSection:{
-        flex:3,
-        backgroundColor:"grey",
-        borderRadius: 16,
+        flex: 1,
+    },
+
+    bottomSectionContent:{
+        alignItems:"center",
+     
+      
     },
 
 
@@ -204,7 +216,7 @@ const styles= StyleSheet.create({
     temperatureMainBox:{
         backgroundColor: "#292929",
         borderRadius: 16,
-        padding: 8,
+        padding: 16,
         flexDirection:"column",
         gap: 16,
         flex:1,
