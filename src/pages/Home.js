@@ -2,17 +2,11 @@ import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BarChart } from 'react-native-gifted-charts';
 
+import { electricitySummary, waterSummary, temperatureSummary } from "../data/DataSource";
+
+
 import Floorplan from "../../assets/Floorplan"
 
-const energyData = [
-    { value: 12, label: "M",},
-    { value: 16, label: "T",},
-    { value: 14, label: "W",},
-    { value: 18, label: "T",},
-    { value: 15, label: "F",},
-    { value: 18, label: "S",},
-    { value: 30, label: "S"},
-  ];
 
 export default function Home(){
 
@@ -27,12 +21,12 @@ export default function Home(){
                             <View style={styles.outerTemp}>
                                 <View style={styles.temperatureDisplayBox}>
                                     <Ionicons style={styles.icon} name="thermometer-outline" size={16} color={"white"} />
-                                    <Text style={styles.tempText}> 16</Text>
+                                    <Text style={styles.tempText}>{temperatureSummary.outdoor.temperature ?? "--"}</Text>
                                     <Text style={styles.tempUnit}> °C</Text>
                                 </View>
                                 <View style={styles.temperatureDisplayBox}>
                                     <Ionicons style={styles.tempIcon} name="water-outline" size={16} color={"white"} />
-                                    <Text style={styles.tempText}> 65</Text>
+                                    <Text style={styles.tempText}>{temperatureSummary.outdoor.humidity ?? "--"}</Text>
                                     <Text style={styles.tempUnit}> %</Text>
                                 </View>
                             </View>
@@ -40,13 +34,13 @@ export default function Home(){
                   
                             <View style={styles.temperatureDisplayBox}>
                                 <Ionicons style={styles.icon} name="thermometer-outline" size={16} color={"white"} />
-                                <Text style={styles.tempText}> 16</Text>
+                                <Text style={styles.tempText}>{temperatureSummary.internal.temperature ?? "--"}</Text>
                                 <Text style={styles.tempUnit}> °C</Text>
                             </View>
                         
                             <View style={styles.temperatureDisplayBox}>
                                 <Ionicons style={styles.tempIcon} name="water-outline" size={16} color={"white"} />
-                                <Text style={styles.tempText}> 65</Text>
+                                <Text style={styles.tempText}>{temperatureSummary.internal.humidity ?? "--"}</Text>
                                 <Text style={styles.tempUnit}> %</Text>
                             </View>
                             
@@ -58,7 +52,7 @@ export default function Home(){
                     <View style={styles.valueSection}>
                         <View>
                             <Ionicons style={styles.icon} name="flash-outline" size={16} color={"white"} />
-                            <Text style={styles.textValue}> 1300</Text>
+                            <Text style={styles.textValue}>{electricitySummary.currentTotal}</Text>
                             <Text style={styles.textUnit}>kWh</Text>
                             
                         </View>
@@ -66,15 +60,17 @@ export default function Home(){
 
                     <View style={styles.graphSection}>
                         <BarChart
+                            data={electricitySummary.charts.daily}
                             height={80}
-                            barWidth={10}
+                            barWidth={16}
+                            spacing={24}
+                            initialSpacing={3}
                             barBorderRadius={3}
                             frontColor={"#31FFD2"}
-                            data={energyData}
                             yAxisThickness={0}
                             xAxisThickness={0}
                             backgroundColor={"transparent"}
-                            noOfSections={1}
+                            noOfSections={2}
                             xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
                             yAxisTextStyle={{ color: "white", fontSize: 10 }}
                        
@@ -89,21 +85,23 @@ export default function Home(){
                     <View style={styles.valueSection}>
                         <View>
                         <Ionicons style={styles.icon} name="water-outline" size={16} color={"white"} />
-                            <Text style={styles.textValue}>300</Text>
+                            <Text style={styles.textValue}>{waterSummary.currentTotal}</Text>
                             <Text style={styles.textUnit}>litre</Text>
                         </View>
                     </View>
                     <View style={styles.graphSection}>
                     <BarChart
+                            data={waterSummary.charts.daily}
                             height={80}
-                            barWidth={10}
+                            barWidth={16}
                             barBorderRadius={3}
+                            spacing={24}
+                            initialSpacing={3}
                             frontColor={"#31FFD2"}
-                            data={energyData}
                             yAxisThickness={0}
                             xAxisThickness={0}
                             backgroundColor={"transparent"}
-                            noOfSections={1}
+                            noOfSections={3}
                             xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
                             yAxisTextStyle={{ color: "white", fontSize: 10 }}
                            
@@ -161,11 +159,13 @@ const styles= StyleSheet.create({
         borderRadius: 16,
         padding: 16,
         flexDirection:"row",
+        justifyContent:"center",
         gap: 16,
         flex:1,
         flexGrow:1,
         flexBasis: 260,
         minHeight:100,
+
     },
 
     icon:{
@@ -177,6 +177,7 @@ const styles= StyleSheet.create({
     
         justifyContent: "center",
         alignContent:"center",
+        paddingHorizontal:16,
         
     },
     graphSection:{

@@ -2392,10 +2392,148 @@ const monthlyData = [
     },
 ];
 
-export { currentData, dailyData, monthlyData };
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const dayLabels = ["M", "T", "W", "T", "F", "S", "S"];
+
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthLabels = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+
+const sumBy = (items, key) =>
+    items.reduce((sum, item) => sum + (Number(item[key]) || 0), 0);
+
+const averageBy = (items, key) => {
+    const values = items
+        .map((item) => item[key])
+        .filter((value) => typeof value === "number");
+    if (!values.length) return null;
+    return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+};
+
+const dailyTotalsBy = (key) =>
+    days.map((day, index) => ({
+        label: dayLabels[index],
+        value: sumBy(dailyData.filter((item) => item.day === day), key),
+    }));
+
+const monthlyTotalsBy = (key) =>
+    months.map((month, index) => ({
+        label: monthLabels[index],
+        value: sumBy(monthlyData.filter((item) => item.month === month), key),
+    }));
+
+const monthlyElectric = monthlyTotalsBy("electric");
+const annualElectricTotal = monthlyElectric.reduce((sum, item) => sum + item.value, 0);
+
+const monthlyWater = monthlyTotalsBy("water");
+const annualWaterTotal = monthlyWater.reduce((sum, item) => sum + item.value, 0);
+
+const topElectricUsers = [...currentData]
+    .sort((a, b) => b.electric - a.electric)
+    .slice(0, 5)
+    .map((item) => ({
+        label: item.area,
+        value: item.electric,
+    }));
+
+const outdoor = currentData.find((item) => item.area === "frontdoor");
+const internalAreas = currentData.filter((item) => item.area !== "frontdoor");
+
+const electricitySummary = {
+    currentTotal: sumBy(currentData, "electric"),
+    annualTotal: annualElectricTotal,
+    charts: {
+        daily: dailyTotalsBy("electric"),
+        monthly: monthlyElectric,
+    },
+    topUsers: topElectricUsers,
+};
+
+const topWaterUsers = [...currentData]
+    .filter((item) => typeof item.water === "number")
+    .sort((a, b) => b.water - a.water)
+    .slice(0, 5)
+    .map((item) => ({
+        label: item.area,
+        value: item.water,
+    }));
+
+const waterSummary = {
+    currentTotal: sumBy(currentData, "water"),
+    annualTotal: annualWaterTotal,
+    charts: {
+        daily: dailyTotalsBy("water"),
+        monthly: monthlyWater,
+    },
+    topUsers: topWaterUsers,
+};
+const temperatureSummary = {
+    outdoor: {
+        temperature: outdoor ? outdoor.temperature : null,
+        humidity: outdoor ? outdoor.humidity : null,
+    },
+    internal: {
+        temperature: averageBy(internalAreas, "temperature"),
+        humidity: averageBy(internalAreas, "humidity"),
+    },
+    charts: {
+        daily: days.map((day, index) => ({
+            label: dayLabels[index],
+            stacks: [
+                {
+                    value: averageBy(dailyData.filter((item) => item.day === day), "temperature") ?? 0,
+                    color: "#31FFD2",
+                },
+                {
+                    value: averageBy(dailyData.filter((item) => item.day === day), "humidity") ?? 0,
+                    color: "#4F46E5",
+                },
+            ],
+        })),
+        monthly: months.map((month, index) => ({
+            label: monthLabels[index],
+            stacks: [
+                {
+                    value: averageBy(monthlyData.filter((item) => item.month === month), "temperature") ?? 0,
+                    color: "#31FFD2",
+                },
+                {
+                    value: averageBy(monthlyData.filter((item) => item.month === month), "humidity") ?? 0,
+                    color: "#4F46E5",
+                },
+            ],
+        })),
+    },
+};
+
+const homeSummary = {
+    outdoor: temperatureSummary.outdoor,
+    internal: temperatureSummary.internal,
+    totals: {
+        electric: electricitySummary.currentTotal,
+        water: waterSummary.currentTotal,
+    },
+    charts: {
+        dailyElectric: electricitySummary.charts.daily,
+        dailyWater: waterSummary.charts.daily,
+    },
+};
+
+export {
+    currentData,
+    dailyData,
+    monthlyData,
+    electricitySummary,
+    waterSummary,
+    temperatureSummary,
+    homeSummary,
+};
 
 export default {
     currentData,
     dailyData,
     monthlyData,
+    electricitySummary,
+    waterSummary,
+    temperatureSummary,
+    homeSummary,
 };

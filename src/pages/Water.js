@@ -5,33 +5,10 @@ import { BarChart, LineChart, RadarChart } from 'react-native-gifted-charts';
 import FloorplanWater from "../../assets/FloorplanWater";
 import TopUser from '../components/TopUser';
 
-const energyData = [
-    { value: 12, label: "M",},
-    { value: 16, label: "T",},
-    { value: 14, label: "W",},
-    { value: 18, label: "T",},
-    { value: 15, label: "F",},
-    { value: 18, label: "S",},
-    { value: 30, label: "S"},
-  ];
-
-  const energyDataMonthly = [
-    { value: 12, label: "J",},
-    { value: 16, label: "F",},
-    { value: 14, label: "M",},
-    { value: 18, label: "A",},
-    { value: 15, label: "M",},
-    { value: 18, label: "J",},
-    { value: 30, label: "J"},
-    { value: 14, label: "A",},
-    { value: 18, label: "S",},
-    { value: 15, label: "O",},
-    { value: 18, label: "N",},
-    { value: 30, label: "D"},
-  ]
+import { waterSummary } from "../data/DataSource";
 
 
-export default function Electricity(){
+export default function Water(){
 
 
 
@@ -44,7 +21,7 @@ export default function Electricity(){
                     <View style={styles.valueSection}>
                         <View>
                             <Ionicons style={styles.icon} name="water-outline" size={16} color={"white"} />
-                            <Text style={styles.textValue}> 1300</Text>
+                            <Text style={styles.textValue}>{waterSummary.currentTotal}</Text>
                             <Text style={styles.textUnit}>litre</Text>
                             
                         </View>
@@ -52,11 +29,13 @@ export default function Electricity(){
 
                     <View style={styles.graphSection}>
                         <BarChart
+                            data={waterSummary.charts.daily} 
                             height={80}
-                            barWidth={10}
+                            barWidth={16}
+                            spacing={24}
+                            initialSpacing={0}
                             barBorderRadius={3}
                             frontColor={"#31FFD2"}
-                            data={energyData}
                             yAxisThickness={0}
                             xAxisThickness={0}
                             backgroundColor={"transparent"}
@@ -77,16 +56,17 @@ export default function Electricity(){
                     <View style={styles.valueSection}>
                     <View>
                         <Ionicons style={styles.icon} name="water-outline" size={16} color={"white"} />
-                        <Text style={styles.textValue}> 1300</Text>
-                        <Text style={styles.textUnit}>kWh</Text>
+                        
+                        <Text style={styles.textValue}>{waterSummary.annualTotal}</Text> 
+                        <Text style={styles.textUnit}>litre</Text>
                         
                     </View>
                 </View>
                     <View style={styles.graphSection}>
                         <LineChart
-                        data={energyDataMonthly}
+                        data={waterSummary.charts.monthly} 
                         height={80}
-                        width={300}              
+                        width={350}              
                         areaChart
                         dataPointsColor={"white"}  
                         startFillColor={"#31FFD2"}
@@ -101,7 +81,7 @@ export default function Electricity(){
                         yAxisThickness={0}
                         xAxisThickness={0}
                         rulesThickness={0}
-                        spacing={22}       
+                        spacing={30}       
                         initialSpacing={0} 
                
                         xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
@@ -112,7 +92,7 @@ export default function Electricity(){
 
                 <View style={styles.topUser}>
                     <View style={styles.graphSection}>
-                        <TopUser/>
+                     <TopUser data={waterSummary.topUsers} />
                     </View>
                 </View>
                 
@@ -190,6 +170,7 @@ const styles= StyleSheet.create({
     
         justifyContent: "center",
         alignContent:"center",
+        paddingHorizontal:24,
         
     },
     graphSection:{

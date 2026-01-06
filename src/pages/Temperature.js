@@ -4,52 +4,10 @@ import { BarChart } from 'react-native-gifted-charts';
 
 import FloorplanTemp from "../../assets/FloorplanTemp"
 
-const temperatureData = [
-    { value: 12, label: "M",},
-    { value: 16, label: "T",},
-    { value: 14, label: "W",},
-    { value: 18, label: "T",},
-    { value: 15, label: "F",},
-    { value: 18, label: "S",},
-    { value: 30, label: "S"},
-  ];
-
-  const humidityData = [
-    { value: 40, label: "M",},
-    { value: 45, label: "T",},
-    { value: 60, label: "W",},
-    { value: 55, label: "T",},
-    { value: 40, label: "F",},
-    { value: 30, label: "S",},
-    { value: 30, label: "S"},
-  ];
-
-  const stackData = [
-    { label: "M", stacks: [{ value: 30, color: "#31FFD2" }, { value: 15, color: "#4F46E5" }] },
-    { label: "T", stacks: [{ value: 18, color: "#31FFD2" }, { value: 22, color: "#4F46E5" }] },
-    { label: "W", stacks: [{ value: 10, color: "#31FFD2" }, { value: 28, color: "#4F46E5" }] },
-    { label: "T", stacks: [{ value: 15, color: "#31FFD2" }, { value: 15, color: "#4F46E5" }] },
-    { label: "F", stacks: [{ value: 0, color: "#31FFD2" }, { value: 0, color: "#4F46E5" }] },
-    { label: "S", stacks: [{ value: 0, color: "#31FFD2" }, { value: 0, color: "#4F46E5" }] },
-    { label: "S", stacks: [{ value: 0, color: "#31FFD2" }, { value: 0, color: "#4F46E5" }] },
-  ];
-
-  const stackDataMonthly = [
-    { label: "J", stacks: [{ value: 30, color: "#31FFD2" }, { value: 15, color: "#4F46E5" }] },
-    { label: "F", stacks: [{ value: 18, color: "#31FFD2" }, { value: 22, color: "#4F46E5" }] },
-    { label: "M", stacks: [{ value: 10, color: "#31FFD2" }, { value: 28, color: "#4F46E5" }] },
-    { label: "A", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "M", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "J", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "J", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "A", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "S", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "O", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "N", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-    { label: "D", stacks: [{ value: 25, color: "#31FFD2" }, { value: 12, color: "#4F46E5" }] },
-  ];
+import { temperatureSummary } from "../data/DataSource";
 
 
+ 
 export default function Temperature(){
 
 
@@ -63,12 +21,12 @@ export default function Temperature(){
                             <View style={styles.outerTemp}>
                                 <View style={styles.temperatureDisplayBox}>
                                     <Ionicons style={styles.icon} name="thermometer-outline" size={16} color={"white"} />
-                                    <Text style={styles.tempText}> 16</Text>
+                                    <Text style={styles.tempText}>{temperatureSummary.outdoor.temperature ?? "--"}</Text>
                                     <Text style={styles.tempUnit}> °C</Text>
                                 </View>
                                 <View style={styles.temperatureDisplayBox}>
                                     <Ionicons style={styles.tempIcon} name="water-outline" size={16} color={"white"} />
-                                    <Text style={styles.tempText}> 65</Text>
+                                    <Text style={styles.tempText}>{temperatureSummary.outdoor.humidity ?? "--"}</Text>
                                     <Text style={styles.tempUnit}> %</Text>
                                 </View>
                             </View>
@@ -76,13 +34,15 @@ export default function Temperature(){
                   
                             <View style={styles.temperatureDisplayBox}>
                                 <Ionicons style={styles.icon} name="thermometer-outline" size={16} color={"white"} />
-                                <Text style={styles.tempText}> 16</Text>
+                                <Text style={styles.tempText}>{temperatureSummary.internal.temperature ?? "--"}</Text>
                                 <Text style={styles.tempUnit}> °C</Text>
                             </View>
                         
                             <View style={styles.temperatureDisplayBox}>
                                 <Ionicons style={styles.tempIcon} name="water-outline" size={16} color={"white"} />
-                                <Text style={styles.tempText}> 65</Text>
+                                <Text style={styles.tempText}>{temperatureSummary.internal.humidity ?? "--"}</Text>
+
+
                                 <Text style={styles.tempUnit}> %</Text>
                             </View>
                             
@@ -100,9 +60,12 @@ export default function Temperature(){
 
                     <View style={styles.graphSection}>
                         <BarChart
-                            stackData={stackData}
+                            stackData={temperatureSummary.charts.daily}
                             height={80}
-                            barWidth={10}
+                       
+                            barWidth={16}
+                            spacing={24}
+                            initialSpacing={3}
                             barBorderRadius={3}
                             yAxisThickness={0}
                             xAxisThickness={0}
@@ -127,9 +90,9 @@ export default function Temperature(){
                     </View>
                     <View style={styles.graphSection}>
                         <BarChart
-                        stackData={stackDataMonthly}
+                        stackData={temperatureSummary.charts.monthly}
                         height={80}
-                        barWidth={10}
+                        barWidth={16}
                         barBorderRadius={3}
                         yAxisThickness={0}
                         xAxisThickness={0}
@@ -137,7 +100,7 @@ export default function Temperature(){
                         noOfSections={1}
                         xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
                         yAxisTextStyle={{ color: "white", fontSize: 10 }}
-                        spacing={16}
+                        spacing={8}
                    
                         rulesThickness={0}
                         rulesColor="transparent"
@@ -198,6 +161,7 @@ const styles= StyleSheet.create({
         flexGrow:1,
         flexBasis: 260,
         minHeight:100,
+        justifyContent:"center",
     },
 
     icon:{
@@ -215,10 +179,10 @@ const styles= StyleSheet.create({
     },
     graphSection:{
         borderRadius: 8,
-        flex:1,
-        padding:16,
         alignSelf:"center",
     },
+
+    
 
     textValue:{
         color:"white",

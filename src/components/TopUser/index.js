@@ -1,26 +1,18 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-const data = [
-  { label: "Bedroom 1", value: 3201 },
-  { label: "Kitchen", value: 2100 },
-  { label: "Living Room", value: 1800 },
-  { label: "Bathroom", value: 900 },
-  { label: "Garage", value: 600 },
-];
-
-export default function TopUserBars() {
-  const maxValue = Math.max(...data.map((d) => d.value), 1);
+export default function TopUserBars({ data = [] }) {
+  const list = Array.isArray(data) ? data.slice(0, 5) : [];
+  const values = list.map((item) => Number(item.value) || 0);
+  const maxValue = values.length ? Math.max(...values) : 1;
 
   return (
     <View style={styles.container}>
-      {data.map((item) => {
-        const bar = item.value / maxValue; 
+      {list.map((item, index) => {
+        const bar = (Number(item.value) || 0) / maxValue;
         return (
-          <View key={item.label} style={styles.row}>
-            <Text style={styles.name}>
-              {item.label}
-            </Text>
+          <View key={`${item.label}-${index}`} style={styles.row}>
+            <Text style={styles.name}>{item.label}</Text>
 
             <View style={styles.barColumn}>
               <View style={styles.bar}>
@@ -35,8 +27,6 @@ export default function TopUserBars() {
     </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

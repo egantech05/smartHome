@@ -1,6 +1,18 @@
 import * as React from "react"
 import { View, StyleSheet, Pressable } from "react-native";
 import Svg, { Defs, G, Rect, Path, Text, TSpan } from "react-native-svg"
+
+import { currentData } from "../src/data/DataSource";
+
+const dataByArea = Object.fromEntries(
+  currentData.map((item) => [item.area, item])
+);
+
+const data = (area, key) => {
+  const value = dataByArea[area]?.[key];
+  return typeof value === "number" ? String(value) : "--";
+};
+
 export default function FloorplanTemp(){
     return(
   <Svg
@@ -86,7 +98,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan2"
           >
-            {"20"}
+            {data("garage", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -118,7 +130,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan4"
           >
-            {"30"}
+            {data("garage", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -192,7 +204,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan42"
           >
-            {"20"}
+            {data("bedroom1", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -222,7 +234,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan44"
           >
-            {"30"}
+            {data("bedroom1", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -294,7 +306,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan48"
           >
-            {"20"}
+            {data("bathroom1", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -324,7 +336,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan50"
           >
-            {"30"}
+            {data("bathroom1", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -396,7 +408,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan54"
           >
-            {"20"}
+            {data("bedroom2", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -426,7 +438,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan56"
           >
-            {"30"}
+            {data("bedroom2", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -498,7 +510,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan60"
           >
-            {"20"}
+            {data("livingarea", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -528,7 +540,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan62"
           >
-            {"30"}
+            {data("livingarea", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -600,7 +612,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan66"
           >
-            {"20"}
+            {data("store", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -630,7 +642,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan68"
           >
-            {"30"}
+            {data("store", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -702,7 +714,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan72"
           >
-            {"20"}
+            {data("frontdoor", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -732,7 +744,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan74"
           >
-            {"30"}
+            {data("frontdoor", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -804,7 +816,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan83"
           >
-            {"20"}
+            {data("kitchen", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -834,7 +846,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan85"
           >
-            {"30"}
+            {data("kitchen", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -906,7 +918,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan89"
           >
-            {"20"}
+            {data("bedroom3", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -936,7 +948,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan91"
           >
-            {"30"}
+            {data("bedroom3", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1008,7 +1020,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan95"
           >
-            {"20"}
+            {data("bathroom2", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1038,7 +1050,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan97"
           >
-            {"30"}
+            {data("bathroom2", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1110,7 +1122,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan101"
           >
-            {"20"}
+            {data("bedroom4", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1140,7 +1152,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan103"
           >
-            {"30"}
+            {data("bedroom4", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1212,7 +1224,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan107"
           >
-            {"20"}
+            {data("bedroom5", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1242,7 +1254,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan109"
           >
-            {"30"}
+            {data("bedroom5", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1314,7 +1326,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan113"
           >
-            {"20"}
+            {data("laundry", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1344,7 +1356,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan115"
           >
-            {"30"}
+            {data("laundry", "temperature")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1416,7 +1428,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan119"
           >
-            {"20"}
+            {data("bathroom3", "humidity")}
           </TSpan>
         </TSpan>
       </Text>
@@ -1446,7 +1458,7 @@ export default function FloorplanTemp(){
             style={styles.valueText}
             id="tspan121"
           >
-            {"30"}
+            {data("bathroom3", "temperature")}
           </TSpan>
         </TSpan>
       </Text>

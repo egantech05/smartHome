@@ -1,6 +1,18 @@
 import * as React from "react"
 import { View, StyleSheet, Pressable } from "react-native";
 import Svg, { Defs, Rect, G, Path, Text, TSpan } from "react-native-svg"
+
+import { currentData } from "../src/data/DataSource";
+
+const dataByArea = Object.fromEntries(
+  currentData.map((item) => [item.area, item])
+);
+
+const data = (area) => {
+  const value = dataByArea[area]?.water;
+  return typeof value === "number" ? String(value) : "--";
+};
+
 export default function FloorplanWater(){
     return(
   <Svg
@@ -193,12 +205,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={116.53617} y={401.06848} id="tspan2">
+      <TSpan x={124.53617} y={401.06848} id="tspan2">
         <TSpan
           style={styles.valueText}
           id="tspan1"
         >
-          {"300"}
+          {data("garage")}
         </TSpan>
       </TSpan>
     </Text>
@@ -233,12 +245,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={108.95285} y={401.06848} id="tspan4">
+      <TSpan x={122.95285} y={401.06848} id="tspan4">
         <TSpan
           style={styles.valueText}
           id="tspan3"
         >
-          {"3000"}
+          {data("bathroom1")}
         </TSpan>
       </TSpan>
     </Text>
@@ -272,12 +284,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={108.95285} y={401.06848} id="tspan6">
+      <TSpan x={125.95285} y={401.06848} id="tspan6">
         <TSpan
           style={styles.valueText}
           id="tspan5"
         >
-          {"3000"}
+          {data("frontdoor")}
         </TSpan>
       </TSpan>
     </Text>
@@ -311,12 +323,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={108.95285} y={401.06848} id="tspan8">
+      <TSpan x={124.95285} y={401.06848} id="tspan8">
         <TSpan
           style={styles.valueText}
           id="tspan7"
         >
-          {"3000"}
+          {data("kitchen")}
         </TSpan>
       </TSpan>
     </Text>
@@ -350,12 +362,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={108.95285} y={401.06848} id="tspan10">
+      <TSpan x={122.95285} y={401.06848} id="tspan10">
         <TSpan
           style={styles.valueText}
           id="tspan9"
         >
-          {"3000"}
+          {data("bathroom2")}
         </TSpan>
       </TSpan>
     </Text>
@@ -389,12 +401,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={108.95285} y={401.06848} id="tspan12">
+      <TSpan x={124.95285} y={401.06848} id="tspan12">
         <TSpan
           style={styles.valueText}
           id="tspan11"
         >
-          {"3000"}
+          {data("laundry")}
         </TSpan>
       </TSpan>
     </Text>
@@ -428,12 +440,12 @@ export default function FloorplanWater(){
         fillRule: "nonzero",
       }}
     >
-      <TSpan x={108.95285} y={401.06848} id="tspan14">
+      <TSpan x={124.95285} y={401.06848} id="tspan14">
         <TSpan
           style={styles.valueText}
           id="tspan13"
         >
-          {"3000"}
+          {data("bathroom3")}
         </TSpan>
       </TSpan>
     </Text>

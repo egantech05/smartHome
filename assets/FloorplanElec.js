@@ -2,6 +2,17 @@ import * as React from "react"
 import { View, StyleSheet, Pressable } from "react-native";
 import Svg, { Rect, Path,TSpan,Text } from "react-native-svg"
 
+import { currentData } from "../src/data/DataSource";
+
+const dataByArea = Object.fromEntries(
+  currentData.map((item) => [item.area, item])
+);
+
+const data = (area) => {
+  const value = dataByArea[area]?.electric;
+  return typeof value === "number" ? String(value) : "--";
+};
+
 export default function FloorplanElec({ active }) {
 
     return(
@@ -33,10 +44,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13)",
                 whiteSpace: "pre",
               }}
-              transform="translate(-2.705 1.57) scale(.26458)"
+              transform="translate(-1.705 1.57) scale(.26458)"
             >
               <TSpan x={116.536} y={401.068}>
-                <TSpan style={styles.valueText}>{"300"}</TSpan>
+                <TSpan style={styles.valueText}>{data("garage")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -55,10 +66,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect14)",
                 whiteSpace: "pre",
               }}
-              transform="translate(-6.208 -44.775) scale(.26458)"
+              transform="translate(-4.208 -44.775) scale(.26458)"
             >
               <TSpan x={116.536} y={401.068} >
-                <TSpan style={styles.valueText}>{"300"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bedroom1")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -77,10 +88,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-8)",
                 whiteSpace: "pre",
               }}
-              transform="translate(-22.749 -80.894) scale(.26458)"
+              transform="translate(-19.749 -80.894) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bathroom1")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -99,10 +110,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-1)",
                 whiteSpace: "pre",
               }}
-              transform="translate(7.361 -80.439) scale(.26458)"
+              transform="translate(11.361 -80.439) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bedroom2")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -122,10 +133,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-2)",
                 whiteSpace: "pre",
               }}
-              transform="translate(50.983 -46.179) scale(.26458)"
+              transform="translate(53.983 -46.179) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("livingarea")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -144,10 +155,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-3)",
                 whiteSpace: "pre",
               }}
-              transform="translate(53.587 -5.37) scale(.26458)"
+              transform="translate(57.587 -5.37) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("store")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -166,10 +177,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-5)",
                 whiteSpace: "pre",
               }}
-              transform="translate(48.004 24.08) scale(.26458)"
+              transform="translate(52.004 24.08) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("frontdoor")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -188,10 +199,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-59)",
                 whiteSpace: "pre",
               }}
-              transform="translate(95.699 -32.823) scale(.26458)"
+              transform="translate(98.699 -32.823) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("kitchen")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -210,10 +221,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-10)",
                 whiteSpace: "pre",
               }}
-              transform="translate(99.932 3.769) scale(.26458)"
+              transform="translate(103.932 3.769) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bedroom3")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -232,10 +243,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-16)",
                 whiteSpace: "pre",
               }}
-              transform="translate(75.7 15.033) scale(.26458)"
+              transform="translate(78.7 15.033) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bathroom2")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -254,10 +265,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-9)",
                 whiteSpace: "pre",
               }}
-              transform="translate(81.84 -80.675) scale(.26458)"
+              transform="translate(85.84 -80.675) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bedroom4")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -276,10 +287,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-4)",
                 whiteSpace: "pre",
               }}
-              transform="translate(117.58 -80.654) scale(.26458)"
+              transform="translate(121.58 -80.654) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bedroom5")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -298,10 +309,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-89)",
                 whiteSpace: "pre",
               }}
-              transform="translate(122.52 -48.093) scale(.26458)"
+              transform="translate(125.52 -48.093) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("laundry")}</TSpan>
               </TSpan>
             </Text>
             <Rect
@@ -320,10 +331,10 @@ export default function FloorplanElec({ active }) {
                 shapeInside: "url(#rect13-20)",
                 whiteSpace: "pre",
               }}
-              transform="translate(122.21 -20.168) scale(.26458)"
+              transform="translate(125.21 -20.168) scale(.26458)"
             >
               <TSpan x={108.953} y={401.068}>
-                <TSpan style={styles.valueText}>{"3000"}</TSpan>
+                <TSpan style={styles.valueText}>{data("bathroom3")}</TSpan>
               </TSpan>
             </Text>
           </Svg>
