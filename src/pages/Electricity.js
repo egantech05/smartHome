@@ -84,7 +84,8 @@ export default function Electricity(){
                         xAxisThickness={0}
                         rulesThickness={0}
                             
-                        initialSpacing={0} 
+                        initialSpacing={16} 
+                        adjustToWidth 
                
                         xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
                         yAxisTextStyle={{ color: "white", fontSize: 10 }}

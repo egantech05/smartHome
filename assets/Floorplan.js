@@ -1,6 +1,11 @@
 import * as React from "react"
 import Svg, { G, Rect, Path } from "react-native-svg"
 export default function Floorplan({ active }) {
+    const highlight = "#31FFD2";
+    const base = "#212121";
+    const fill = (id, fallback = base) =>
+    active === id ? highlight : fallback;
+
   return(
   <Svg
     width={664.139}
@@ -11,22 +16,22 @@ export default function Floorplan({ active }) {
       transform="translate(-12.779 -58.567)"
     >
       <G strokeWidth={0.265}>
-        <Rect id="garage" fill="#212121" fillOpacity={0.641} width={57.046} height={53.512} x={18.931} y={137.06} ry={0} />
-        <Rect id="bedroom1" fill="#212121" fillOpacity={0.641} width={46.697} height={34.329} x={18.372} y={100.6} ry={0} />
-        <Rect id="bathroom1" fill="#212121" fillOpacity={0.641}  width={16.155} height={33.824} x={18.442} y={64.936} ry={0} />
-        <Rect id="bedroom2" fill="#212121" fillOpacity={0.641}  width={38.872} height={33.824} x={36.842} y={64.583} ry={0} />
-        <Rect id="livingarea" fill="#212121" fillOpacity={0.641}  width={35.563} height={46.697} x={78.11} y={64.931} ry={0} />
-        <Rect id="diningarea" fill="#212121" fillOpacity={0.641} width={47.265} height={30.227} x={78.105} y={111.59} ry={0} />
+        <Rect id="garage" fill={fill("garage")} fillOpacity={0.641} width={57.046} height={53.512} x={18.931} y={137.06} ry={0} />
+        <Rect id="bedroom1" fill={fill("bedroom1")} fillOpacity={0.641} width={46.697} height={34.329} x={18.372} y={100.6} ry={0} />
+        <Rect id="bathroom1" fill={fill("bathroom1")} fillOpacity={0.641}  width={16.155} height={33.824} x={18.442} y={64.936} ry={0} />
+        <Rect id="bedroom2" fill={fill("bedroom2")} fillOpacity={0.641}  width={38.872} height={33.824} x={36.842} y={64.583} ry={0} />
+        <Rect id="livingarea" fill={fill("livingarea")} fillOpacity={0.641}  width={35.563} height={46.697} x={78.11} y={64.931} ry={0} />
+        <Rect id="diningarea" fill={fill("diningarea")} fillOpacity={0.641} width={47.265} height={30.227} x={78.105} y={111.59} ry={0} />
       </G>
-      <Rect id="store" fill="#212121" fillOpacity={0.641} width={22.15} height={26.912} x={92.102} y={143.69} ry={0} />
-      <Rect id="frontdoor" fill="#212121"  fillOpacity={0.641} width={35.023} height={20.854} x={78.651} y={172.66} ry={0} />
-      <Rect id="kitchen" fill="#212121"  fillOpacity={0.641} width={31.737} height={34.638} x={126.18} y={114.62} ry={0} />
-      <Rect id="bedroom3" fill="#212121"  fillOpacity={0.641} width={33.851} height={30.712} x={131.15} y={151.06} ry={0} />
-      <Rect id="bathroom2" fill="#212121"  fillOpacity={0.641} width={12.968} height={28.034} x={116.48} y={162.52} ry={0} />
-      <Rect id="bedroom4" fill="#212121"  fillOpacity={0.641} width={30.601} height={33.629} x={115.78} y={65.203} ry={0} />
-      <Rect id="bedroom5" fill="#31ffd2"  fillOpacity={0.641} width={34.676} height={35.949} x={148.18} y={65.108} ry={0} />
-      <Rect id="laundry" fill="#212121"  fillOpacity={0.641}  width={23.571} height={24.437} x={159.81} y={103.07} ry={0} />
-      <Path id="bathroom3" fill="#31ffd2"  fillOpacity={0.641} d="M159.39 129.13v19.931h14.961v6.816h8.707v-6.816h.037V129.13z" />
+      <Rect id="store" fill={fill("store")} fillOpacity={0.641} width={22.15} height={26.912} x={92.102} y={143.69} ry={0} />
+      <Rect id="frontdoor" fill={fill("frontdoor")}  fillOpacity={0.641} width={35.023} height={20.854} x={78.651} y={172.66} ry={0} />
+      <Rect id="kitchen" fill={fill("kitchen")}  fillOpacity={0.641} width={31.737} height={34.638} x={126.18} y={114.62} ry={0} />
+      <Rect id="bedroom3" fill={fill("bedroom3")}  fillOpacity={0.641} width={33.851} height={30.712} x={131.15} y={151.06} ry={0} />
+      <Rect id="bathroom2" fill={fill("bathroom2")}  fillOpacity={0.641} width={12.968} height={28.034} x={116.48} y={162.52} ry={0} />
+      <Rect id="bedroom4" fill={fill("bedroom4")}  fillOpacity={0.641} width={30.601} height={33.629} x={115.78} y={65.203} ry={0} />
+      <Rect id="bedroom5" fill={fill("bedroom5")}  fillOpacity={0.641} width={34.676} height={35.949} x={148.18} y={65.108} ry={0} />
+      <Rect id="laundry" fill={fill("laundry")} fillOpacity={0.641}  width={23.571} height={24.437} x={159.81} y={103.07} ry={0} />
+      <Path id="bathroom3" fill={fill("bathroom3")}  fillOpacity={0.641} d="M159.39 129.13v19.931h14.961v6.816h8.707v-6.816h.037V129.13z" />
     </G>
     <Path
       fill="#fff"

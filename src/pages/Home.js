@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BarChart } from 'react-native-gifted-charts';
+import React from "react";
 
 import { electricitySummary, waterSummary, temperatureSummary } from "../data/DataSource";
 
@@ -8,7 +9,49 @@ import { electricitySummary, waterSummary, temperatureSummary } from "../data/Da
 import Floorplan from "../../assets/Floorplan"
 
 
+
 export default function Home(){
+    const steps = [
+        { area: null, delay: 4000 },
+        { area: "garage", delay: 3000 },
+        { area: null, delay: 2000 },
+        { area: "diningarea", delay: 3000 },
+        { area: null, delay: 2000 },
+        { area: "kitchen", delay: 4000 },
+        { area: null, delay: 2000 },
+        { area: "diningarea", delay: 3000 },
+        { area: "livingarea", delay: 6000 },
+        { area: "diningarea", delay: 2000 },
+        { area: null, delay: 2000 },
+        { area: "bedroom1", delay: 4000 },
+        { area: "bathroom1", delay: 5000 },
+        { area: "bedroom1", delay: 3000 },
+        { area: null, delay: 2000 },
+        { area: "garage", delay: 4000 },
+        
+
+      ];
+
+
+    const [active, setActive] = React.useState(steps[0]);
+
+
+      
+      React.useEffect(() => {
+        let i = 0;
+        let timer;
+      
+        const loop = () => {
+          setActive(steps[i].area);
+          timer = setTimeout(() => {
+            i = (i + 1) % steps.length;
+            loop();
+          }, steps[i].delay);
+        };
+      
+        loop();
+        return () => clearTimeout(timer);
+      }, []);
 
 
 
@@ -64,7 +107,7 @@ export default function Home(){
                             height={80}
                             barWidth={16}
                             spacing={24}
-                            initialSpacing={3}
+                         
                             barBorderRadius={3}
                             frontColor={"#31FFD2"}
                             yAxisThickness={0}
@@ -119,7 +162,7 @@ export default function Home(){
                 nestedScrollEnabled
                 showsHorizontalScrollIndicator={false} 
                 >
-                    <Floorplan/>
+                    <Floorplan active={active} />
                 </ScrollView>
             </ScrollView>
         </View>

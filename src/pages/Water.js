@@ -33,7 +33,6 @@ export default function Water(){
                             height={80}
                             barWidth={16}
                             spacing={24}
-                            initialSpacing={0}
                             barBorderRadius={3}
                             frontColor={"#31FFD2"}
                             yAxisThickness={0}
@@ -82,7 +81,7 @@ export default function Water(){
                         xAxisThickness={0}
                         rulesThickness={0}
                         spacing={30}       
-                        initialSpacing={0} 
+                        initialSpacing={16} 
                
                         xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
                         yAxisTextStyle={{ color: "white", fontSize: 10 }}
