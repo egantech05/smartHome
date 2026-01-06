@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { BarChart } from 'react-native-gifted-charts';
+import { BarChart, LineChart, RadarChart } from 'react-native-gifted-charts';
 
-import FloorplanElec from "../../assets/FloorplanElec"
+import FloorplanElec from "../../assets/FloorplanElec";
+import TopUser from '../components/TopUser';
 
 const energyData = [
     { value: 12, label: "M",},
@@ -14,6 +15,22 @@ const energyData = [
     { value: 30, label: "S"},
   ];
 
+  const energyDataMonthly = [
+    { value: 12, label: "J",},
+    { value: 16, label: "F",},
+    { value: 14, label: "M",},
+    { value: 18, label: "A",},
+    { value: 15, label: "M",},
+    { value: 18, label: "J",},
+    { value: 30, label: "J"},
+    { value: 14, label: "A",},
+    { value: 18, label: "S",},
+    { value: 15, label: "O",},
+    { value: 18, label: "N",},
+    { value: 30, label: "D"},
+  ]
+
+
 export default function Electricity(){
 
 
@@ -22,37 +39,6 @@ export default function Electricity(){
         <View style={styles.container}>
             <ScrollView style={styles.topSection} contentContainerStyle={styles.topSectionContent} showsVerticalScrollIndicator={false}>
 
-                <View style={styles.temperatureMainBox}>
-
-                            <View style={styles.outerTemp}>
-                                <View style={styles.temperatureDisplayBox}>
-                                    <Ionicons style={styles.icon} name="thermometer-outline" size={16} color={"white"} />
-                                    <Text style={styles.tempText}> 16</Text>
-                                    <Text style={styles.tempUnit}> °C</Text>
-                                </View>
-                                <View style={styles.temperatureDisplayBox}>
-                                    <Ionicons style={styles.tempIcon} name="water-outline" size={16} color={"white"} />
-                                    <Text style={styles.tempText}> 65</Text>
-                                    <Text style={styles.tempUnit}> %</Text>
-                                </View>
-                            </View>
-                    <View style={styles.internalTemp}>
-                  
-                            <View style={styles.temperatureDisplayBox}>
-                                <Ionicons style={styles.icon} name="thermometer-outline" size={16} color={"white"} />
-                                <Text style={styles.tempText}> 16</Text>
-                                <Text style={styles.tempUnit}> °C</Text>
-                            </View>
-                        
-                            <View style={styles.temperatureDisplayBox}>
-                                <Ionicons style={styles.tempIcon} name="water-outline" size={16} color={"white"} />
-                                <Text style={styles.tempText}> 65</Text>
-                                <Text style={styles.tempUnit}> %</Text>
-                            </View>
-                            
-                       
-                    </View>
-                </View>
 
                 <View style={styles.valueGraph}>
                     <View style={styles.valueSection}>
@@ -85,32 +71,48 @@ export default function Electricity(){
                     </View>
                 </View>
 
+
+
                 <View style={styles.valueGraph}>
                     <View style={styles.valueSection}>
-                        <View>
-                        <Ionicons style={styles.icon} name="water-outline" size={16} color={"white"} />
-                            <Text style={styles.textValue}>300</Text>
-                            <Text style={styles.textUnit}>litre</Text>
-                        </View>
+                    <View>
+                        <Ionicons style={styles.icon} name="flash-outline" size={16} color={"white"} />
+                        <Text style={styles.textValue}> 1300</Text>
+                        <Text style={styles.textUnit}>kWh</Text>
+                        
                     </View>
+                </View>
                     <View style={styles.graphSection}>
-                    <BarChart
-                            height={80}
-                            barWidth={10}
-                            barBorderRadius={3}
-                            frontColor={"#31FFD2"}
-                            data={energyData}
-                            yAxisThickness={0}
-                            xAxisThickness={0}
-                            backgroundColor={"transparent"}
-                            noOfSections={1}
-                            xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
-                            yAxisTextStyle={{ color: "white", fontSize: 10 }}
-                           
-                            rulesThickness={0}
-                            rulesColor="transparent"
-
+                        <LineChart
+                        data={energyDataMonthly}
+                        height={80}
+                        width={300}              
+                        areaChart
+                        dataPointsColor={"white"}  
+                        startFillColor={"#31FFD2"}
+                        endFillColor={"#31FFD2"}
+                        startOpacity={0.25}
+                        endOpacity={0.02}
+                        color={"#31FFD2"}
+                        thickness={2}
+                        curved
+                        noOfSections={2}
+                   
+                        yAxisThickness={0}
+                        xAxisThickness={0}
+                        rulesThickness={0}
+                        spacing={22}       
+                        initialSpacing={0} 
+               
+                        xAxisLabelTextStyle={{ color: "white", fontSize: 10 }}
+                        yAxisTextStyle={{ color: "white", fontSize: 10 }}
                         />
+                    </View>
+                </View>
+
+                <View style={styles.topUser}>
+                    <View style={styles.graphSection}>
+                        <TopUser/>
                     </View>
                 </View>
                 
@@ -161,7 +163,18 @@ const styles= StyleSheet.create({
         borderRadius: 16,
         padding: 16,
         flexDirection:"row",
-        gap: 16,
+        flex:1,
+        flexGrow:1,
+        flexBasis: 260,
+        minHeight:100,
+    },
+
+    topUser:{
+        backgroundColor: "#292929",
+        borderRadius: 16,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        flexDirection:"row",
         flex:1,
         flexGrow:1,
         flexBasis: 260,
@@ -199,49 +212,11 @@ const styles= StyleSheet.create({
         textAlign:"center",
 
     },
-    outerTemp:{
-        flexDirection: "row",
-        justifyContent:"space-around",
-    },
-    internalTemp:{
-        backgroundColor:"#333333",
-        padding:32,
-        paddingHorizontal:56,
-        borderRadius:16,
-        flexDirection:"row",
-        justifyContent:"space-between",
-    
-    },
 
-    temperatureMainBox:{
-        backgroundColor: "#292929",
-        borderRadius: 16,
-        padding: 8,
-        flexDirection:"column",
-        gap: 16,
-        flex:1,
-        flexGrow:1,
-        flexBasis: 260,
-        minHeight: 100,
-        justifyContent: "center",
-    },
 
-    temperatureDisplayBox:{
-        flexDirection:"row",
-        alignItems:"center",
-        gap:8,
-   
-    },
 
-    tempText:{
-        fontSize:24,
-        color:"white",
-    },
 
-    tempUnit:{
-        fontSize:11,
-        color:"white",
-    },
+
 
 
 });
