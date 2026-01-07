@@ -2536,4 +2536,5 @@ export default {
     waterSummary,
     temperatureSummary,
     homeSummary,
+    
 };
