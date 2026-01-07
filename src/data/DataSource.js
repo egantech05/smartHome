@@ -3,106 +3,106 @@ const currentData = [
         area: "garage",
         electric: 140,
         temperature: 12,
-        humidity: 78,
-        water: 18,
+        humidity: 77,
+        water: 19,
     },
     {
         area: "bedroom1",
-        electric: 95,
+        electric: 45,
         temperature: 17,
-        humidity: 58,
-        water: null,
-    },
-    {
-        area: "bedroom2",
-        electric: 85,
-        temperature: 16,
         humidity: 57,
         water: null,
     },
     {
-        area: "bedroom3",
-        electric: 80,
+        area: "bedroom2",
+        electric: 40,
         temperature: 16,
         humidity: 56,
         water: null,
     },
     {
-        area: "bedroom4",
-        electric: 75,
-        temperature: 15,
+        area: "bedroom3",
+        electric: 40,
+        temperature: 16,
         humidity: 55,
+        water: null,
+    },
+    {
+        area: "bedroom4",
+        electric: 20,
+        temperature: 15,
+        humidity: 54,
         water: null,
     },
     {
         area: "bedroom5",
-        electric: 70,
+        electric: 10,
         temperature: 15,
-        humidity: 55,
+        humidity: 54,
         water: null,
     },
     {
         area: "bathroom1",
-        electric: 120,
+        electric: 30,
         temperature: 19,
-        humidity: 72,
-        water: 65,
+        humidity: 71,
+        water: 30,
     },
     {
         area: "bathroom2",
-        electric: 110,
+        electric: 20,
         temperature: 19,
-        humidity: 70,
-        water: 55,
+        humidity: 69,
+        water: 10,
     },
     {
         area: "bathroom3",
-        electric: 100,
+        electric: 10,
         temperature: 18,
-        humidity: 68,
-        water: 45,
+        humidity: 67,
+        water: 20,
     },
     {
         area: "livingarea",
-        electric: 210,
+        electric: 80,
         temperature: 19,
-        humidity: 55,
+        humidity: 54,
         water: null,
     },
     {
         area: "diningarea",
-        electric: 120,
+        electric: 30,
         temperature: null,
         humidity: null,
         water: null,
     },
     {
         area: "kitchen",
-        electric: 190,
+        electric: 80,
         temperature: 19,
-        humidity: 60,
-        water: 70,
+        humidity: 59,
+        water: 34,
     },
     {
         area: "laundry",
-        electric: 160,
+        electric: 40,
         temperature: 17,
-        humidity: 70,
-        water: 50,
+        humidity: 69,
+        water: 40,
     },
     {
         area: "store",
-        electric: 45,
+        electric: 20,
         temperature: 14,
-        humidity: 65,
+        humidity: 64,
         water: null,
     },
     {
         area: "frontdoor",
-        electric: 60,
+        electric: 80,
         temperature: 13,
-        humidity: 80,
-        water: 12,
+        humidity: 79,
+        water: 20,
     },
 ];
 
@@ -2394,6 +2394,12 @@ const monthlyData = [
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dayLabels = ["M", "T", "W", "T", "F", "S", "S"];
+const currentDay = "Thu";
+const currentDayData =
+    currentDay === "Thu"
+        ? currentData
+        : dailyData.filter((item) => item.day === currentDay);
+
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const monthLabels = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
@@ -2415,6 +2421,15 @@ const dailyTotalsBy = (key) =>
         value: sumBy(dailyData.filter((item) => item.day === day), key),
     }));
 
+const dailyTotalsWithCurrentDay = (key) =>
+    days.map((day, index) => ({
+        label: dayLabels[index],
+        value:
+            day === currentDay
+                ? sumBy(currentDayData, key)
+                : sumBy(dailyData.filter((item) => item.day === day), key),
+}));
+
 const monthlyTotalsBy = (key) =>
     months.map((month, index) => ({
         label: monthLabels[index],
@@ -2427,44 +2442,89 @@ const annualElectricTotal = monthlyElectric.reduce((sum, item) => sum + item.val
 const monthlyWater = monthlyTotalsBy("water");
 const annualWaterTotal = monthlyWater.reduce((sum, item) => sum + item.value, 0);
 
-const topElectricUsers = [...currentData]
-    .sort((a, b) => b.electric - a.electric)
-    .slice(0, 5)
-    .map((item) => ({
-        label: item.area,
-        value: item.electric,
-    }));
+
 
 const outdoor = currentData.find((item) => item.area === "frontdoor");
 const internalAreas = currentData.filter((item) => item.area !== "frontdoor");
 
+const renderTopElecUsers = () =>
+    [...currentDayData]
+        .sort((a, b) => (b.electric || 0) - (a.electric || 0))
+        .slice(0, 5)
+        .map((item) => ({
+            label: item.area,
+            value: item.electric,
+        }));
+
+    
+
 const electricitySummary = {
-    currentTotal: sumBy(currentData, "electric"),
+    currentTotal: sumBy(currentDayData, "electric"),
     annualTotal: annualElectricTotal,
     charts: {
-        daily: dailyTotalsBy("electric"),
+        daily: dailyTotalsWithCurrentDay("electric"),
         monthly: monthlyElectric,
     },
-    topUsers: topElectricUsers,
+    topUsers: renderTopElecUsers(),
 };
 
-const topWaterUsers = [...currentData]
-    .filter((item) => typeof item.water === "number")
-    .sort((a, b) => b.water - a.water)
-    .slice(0, 5)
-    .map((item) => ({
-        label: item.area,
-        value: item.water,
-    }));
+const interval = 1000;
+const elecIncrement = {
+    garage: 1,
+    kitchen: 1,
+    bedroom1: 1,
+    livingarea:2,
+    frontdoor:3,
+};
+
+const waterIncrement = {
+    bathroom1: 1,
+    kitchen: 1,
+    laundry: 1,
+    frontdoor:1,
+};
+
+
+setInterval(() => {
+    for (const area in elecIncrement) {
+        const changes = elecIncrement[area];
+        const target = currentDayData.find((item) => item.area === area);
+        target.electric += changes;
+        electricitySummary.currentTotal += changes;
+    }
+
+    for (const area in waterIncrement) {
+        const changes = waterIncrement[area];
+        const target = currentDayData.find((item) => item.area === area);
+        target.water += changes;
+        waterSummary.currentTotal += changes;
+    }
+
+    electricitySummary.charts.daily = dailyTotalsWithCurrentDay("electric");
+    electricitySummary.topUsers = renderTopElecUsers();
+
+    waterSummary.charts.daily = dailyTotalsWithCurrentDay("water");
+    waterSummary.topUsers = renderTopWaterUsers();
+}, interval);
+
+const renderTopWaterUsers = () =>
+    [...currentDayData]
+        .filter((item) => typeof item.water === "number")
+        .sort((a, b) => (b.water || 0) - (a.water || 0))
+        .slice(0, 5)
+        .map((item) => ({
+            label: item.area,
+            value: item.water,
+        }));
 
 const waterSummary = {
     currentTotal: sumBy(currentData, "water"),
     annualTotal: annualWaterTotal,
     charts: {
-        daily: dailyTotalsBy("water"),
+        daily: dailyTotalsWithCurrentDay("water"),
         monthly: monthlyWater,
     },
-    topUsers: topWaterUsers,
+    topUsers: renderTopWaterUsers(),
 };
 const temperatureSummary = {
     outdoor: {
@@ -2520,6 +2580,7 @@ const homeSummary = {
 
 export {
     currentData,
+    currentDayData,
     dailyData,
     monthlyData,
     electricitySummary,
@@ -2530,6 +2591,7 @@ export {
 
 export default {
     currentData,
+    currentDayData,
     dailyData,
     monthlyData,
     electricitySummary,

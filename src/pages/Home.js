@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BarChart } from 'react-native-gifted-charts';
 import React from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 import { electricitySummary, waterSummary, temperatureSummary } from "../data/DataSource";
 
@@ -11,6 +12,17 @@ import Floorplan from "../../assets/Floorplan"
 
 
 export default function Home(){
+
+        const [, forceTick] = React.useState(0);
+        const isFocused = useIsFocused();
+    
+        React.useEffect(() => {
+        if (!isFocused) return;
+        const id = setInterval(() => forceTick((t) => t + 1), 1000);
+        return () => clearInterval(id);
+        }, [isFocused]);
+
+
     const steps = [
         { area: null, delay: 4000 },
         { area: "garage", delay: 3000 },
@@ -56,6 +68,8 @@ export default function Home(){
 
 
     return (
+
+        
         <View style={styles.container}>
             <ScrollView style={styles.topSection} contentContainerStyle={styles.topSectionContent} showsVerticalScrollIndicator={false}>
 
@@ -220,7 +234,8 @@ const styles= StyleSheet.create({
     
         justifyContent: "center",
         alignContent:"center",
-        paddingHorizontal:16,
+        paddingHorizontal:8,
+        width:120,
         
     },
     graphSection:{

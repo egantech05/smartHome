@@ -1,11 +1,10 @@
 import * as React from "react"
 import { View, StyleSheet, Pressable } from "react-native";
 import Svg, { Rect, Path,TSpan,Text } from "react-native-svg"
-
-import { currentData } from "../src/data/DataSource";
+import { currentDayData } from "../src/data/DataSource";
 
 const dataByArea = Object.fromEntries(
-  currentData.map((item) => [item.area, item])
+  currentDayData.map((item) => [item.area, item])
 );
 
 const data = (area) => {
@@ -14,6 +13,13 @@ const data = (area) => {
 };
 
 export default function FloorplanElec({ active }) {
+
+  const [, forceTick] = React.useState(0);
+
+  React.useEffect(() => {
+    const id = setInterval(() => forceTick((t) => t + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
 
     return(
 

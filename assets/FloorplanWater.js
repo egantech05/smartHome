@@ -2,10 +2,10 @@ import * as React from "react"
 import { View, StyleSheet, Pressable } from "react-native";
 import Svg, { Defs, Rect, G, Path, Text, TSpan } from "react-native-svg"
 
-import { currentData } from "../src/data/DataSource";
+import { currentDayData } from "../src/data/DataSource";
 
 const dataByArea = Object.fromEntries(
-  currentData.map((item) => [item.area, item])
+  currentDayData.map((item) => [item.area, item])
 );
 
 const data = (area) => {

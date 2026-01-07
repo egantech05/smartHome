@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BarChart, LineChart, RadarChart } from 'react-native-gifted-charts';
+import React from 'react';
+import { useIsFocused } from "@react-navigation/native";
 
 import FloorplanElec from "../../assets/FloorplanElec";
 import TopUser from '../components/TopUser';
@@ -10,7 +12,14 @@ import { electricitySummary } from "../data/DataSource";
 
 
 export default function Electricity(){
+    const [, forceTick] = React.useState(0);
+    const isFocused = useIsFocused();
 
+    React.useEffect(() => {
+    if (!isFocused) return;
+    const id = setInterval(() => forceTick((t) => t + 1), 1000);
+    return () => clearInterval(id);
+    }, [isFocused]);
 
 
     return (
@@ -174,7 +183,8 @@ const styles= StyleSheet.create({
     
         justifyContent: "center",
         alignContent:"center",
-        paddingHorizontal:24,
+        paddingHorizontal:8,
+        width:120,
         
     },
     graphSection:{
